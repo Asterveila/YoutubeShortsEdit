@@ -1,3 +1,6 @@
+# v1.0.3
+- Added detection for changing gravity
+
 # v1.0.2
 - Separated <cg>"W Speed"</c> Feature onto 2 toggleable features: <cy>"W Speed Descriptive Texts"</c> and <cy>"W (Username) on Level Complete"</c>!
 - <cg>Added</c> a setting to adjust the <cy>Vertical Offset</c> of the Edit Image on the Overlay!

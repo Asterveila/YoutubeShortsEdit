@@ -28,13 +28,23 @@ class $modify(WSpeedBaseLayer, GJBaseGameLayer) {
         CCLabelBMFont* actionFont = nullptr;
     };
 
-    WSpeedFontData getFontData(GJGameEvent event) {
+    WSpeedFontData getFontData(int event) {
         WSpeedFontData data;
-        int eventAsInt = static_cast<int>(event);
         ccColor3B playerColor = GameManager::sharedState()->colorForIdx(GameManager::sharedState()->getPlayerColor());
 
         // credit to the cool ass python script that made this (i just edited the GlobalSounds one a lil)
-        switch(eventAsInt) {
+        switch(event) {
+            // Events that aren't picked up by gameEventTrigger
+            case -1: // yellow gravity portal
+                data.color = ccColor3B({ 255, 255, 0 });
+                data.text = "*CHANGES GRAVITY*";
+                break;
+            case -2: // blue gravity portal
+                data.color = ccColor3B({ 0, 166, 255 });
+                data.text = "*CHANGES GRAVITY*";
+                break;
+
+            // Events that are picked up by gameEventTrigger
             case 23:
                 data.color = ccColor3B({0, 255, 0});
                 data.text = "*DASHES*";
@@ -164,15 +174,11 @@ class $modify(WSpeedBaseLayer, GJBaseGameLayer) {
         return data;
     }
 
-    void gameEventTriggered(GJGameEvent p0, int p1, int p2) {
-        GJBaseGameLayer::gameEventTriggered(p0, p1, p2);
-
-        if (!Mod::get()->getSettingValue<bool>("enable-wspeed-texts")) return;
-
+    void spawnText(int eventId) {
         auto fields = m_fields.self();
         auto winSize = CCDirector::sharedDirector()->getWinSize();
         float posLimit = 80.f;
-        WSpeedFontData fData = getFontData(p0);
+        WSpeedFontData fData = getFontData(eventId);
 
         if (!fields->actionFont) return;
         if (fData.text.empty()) return;
@@ -188,17 +194,39 @@ class $modify(WSpeedBaseLayer, GJBaseGameLayer) {
         );
 
         auto wobble = CCSequence::create(
-            CCEaseInOut::create(CCMoveBy::create(0.35f, {realRandomFloat(1.f, 7.f), realRandomFloat(1.f, 8.f)}), 2.f),
-            CCEaseInOut::create(CCMoveBy::create(0.35f, {-realRandomFloat(1.f, 7.f), -realRandomFloat(1.f, 8.f)}), 2.f),
+            CCEaseInOut::create(CCMoveBy::create(0.35f, { realRandomFloat(1.f, 7.f), realRandomFloat(1.f, 8.f) }), 2.f),
+            CCEaseInOut::create(CCMoveBy::create(0.35f, { -realRandomFloat(1.f, 7.f), -realRandomFloat(1.f, 8.f) }), 2.f),
             nullptr
         );
 
-        fields->actionFont->setPosition({randX, randY});
+        fields->actionFont->setPosition({ randX, randY });
         fields->actionFont->setString(fData.text.c_str(), true);
         fields->actionFont->setColor(fData.color);
         fields->actionFont->stopAllActions();
         fields->actionFont->runAction(labelShow);
         fields->actionFont->runAction(wobble);
+    }
+
+    void gameEventTriggered(GJGameEvent p0, int p1, int p2) {
+        GJBaseGameLayer::gameEventTriggered(p0, p1, p2);
+
+        if (!Mod::get()->getSettingValue<bool>("enable-wspeed-texts")) return;
+
+        int eventAsInt = static_cast<int>(p0);
+        spawnText(eventAsInt);
+    }
+
+    void flipGravity(PlayerObject* object, bool flip, bool noEffects) {
+        GJBaseGameLayer::flipGravity(object, flip, noEffects);
+
+        if (!Mod::get()->getSettingValue<bool>("enable-wspeed-texts")) return;
+
+        if (flip) {
+            spawnText(-1);
+        }
+        else {
+            spawnText(-2);
+        }
     }
 };
 
