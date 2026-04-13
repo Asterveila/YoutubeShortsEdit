@@ -1,3 +1,6 @@
+# v1.1.0
+- Ported to geode v5 (GD 2.2081)
+
 # v1.0.3
 - Added detection for changing gravity
 
