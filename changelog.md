@@ -1,8 +1,6 @@
 # v1.1.0
 - Ported to geode v5 (GD 2.2081)
-
-# v1.0.3
-- Added detection for changing gravity
+- Added detection for changing gravity (Added by Bigmancozmo)
 
 # v1.0.2
 - Separated <cg>"W Speed"</c> Feature onto 2 toggleable features: <cy>"W Speed Descriptive Texts"</c> and <cy>"W (Username) on Level Complete"</c>!
