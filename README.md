@@ -1,8 +1,11 @@
 # Sigma Phonk Edit Mode
 <img src="logo.png" width="150" alt="the mod's logo" />
 ![Mod Version](https://api.geode-sdk.org/v1/mods/saritahhh.youtubeshortsedit/status_badge?stat=version)
+
 ![Downloads](https://api.geode-sdk.org/v1/mods/saritahhh.youtubeshortsedit/status_badge?stat=downloads)
+
 ![GD Version](https://api.geode-sdk.org/v1/mods/saritahhh.youtubeshortsedit/status_badge?stat=gd_version)
+
 ![Geode Version](https://api.geode-sdk.org/v1/mods/saritahhh.youtubeshortsedit/status_badge?stat=geode_version)
 
 Turn your skibidi Geometry Dash Gameplay into the most Sigma Phonk Edit and feel the rizz, or something! *How do you do, fellow kids?*
